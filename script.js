@@ -21,7 +21,23 @@ const getData = (url) => {
 };
 
 const sendData = (newData) => {
-  fetch("https://jsonplaceholder.typicode.com/posts", {
+  let xhr = new XMLHttpRequest();
+  let json = JSON.stringify(newData);
+  xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  xhr.send(json);
+  xhr.onload = function () {
+    if (xhr.status == 404) {
+      console.log("Ошибка");
+    } else {
+      console.log("Готово");
+    }
+  };
+  xhr.onerror = function () {
+    console.log("Запрос не удался");
+  };
+
+  /*fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     body: JSON.stringify(newData),
     headers: {
@@ -34,7 +50,7 @@ const sendData = (newData) => {
     })
     .catch((error) => {
       console.log(error);
-    });
+    });*/
 };
 
 getData("db.json");
